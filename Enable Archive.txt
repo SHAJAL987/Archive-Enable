@@ -1,0 +1,47 @@
+		H O W     T O     E N A B L E    A R C H I V E
+-----------------------------------------------------------------------------------------------
+	Step: 1: Enter SYS and Check Archive is enable of not
+        --------
+		SQL> SELECT  LOG_MODE
+		     FROM    v$database;
+
+		  LOG_MODE
+		  ------------
+		  NOARCHIVELOG
+
+	Step: 2: Shutdown Database
+	--------
+		SQL> shutdown immediate;
+
+	Step: 3: conn sys/sys123 as sysdba
+	--------
+	
+	Step: 4: Going to database on to mount stage.
+	--------
+		SQL> startup mount;
+
+	Step: 5: Set Archive log
+ 	--------
+		SQL> alter database archivelog;
+
+		SQL> SELECT  LOG_MODE
+		     FROM    v$database;
+
+		  LOG_MODE
+		  ------------
+		  ARCHIVELOG
+		
+		SQL> archive log list;
+	
+		Database log mode              Archive Mode
+		Automatic archival             Enabled
+		Archive destination            USE_DB_RECOVERY_FILE_DEST
+		Oldest online log sequence     8
+		Next log sequence to archive   10
+		Current log sequence           10
+
+	Step: 6: Now Open database
+	-------
+		SQL> alter database open;
+
+
